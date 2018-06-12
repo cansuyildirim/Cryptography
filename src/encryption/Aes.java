@@ -1,10 +1,5 @@
 package encryption;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.SecureRandom;
-import java.util.Base64;
 
 
 public class Aes extends AbstractEncryption implements EncryptionInterface {
@@ -33,33 +28,28 @@ public class Aes extends AbstractEncryption implements EncryptionInterface {
      * @return
      * @throws EncryptionException
      */
-    public String encrypt(String value, String key, String salt) throws EncryptionException {
 
-        if((key.getBytes().length == 16 || key.getBytes().length == 24 || key.getBytes().length ==32)
-                && salt.getBytes().length == 16)
+    public byte[] encrypt(byte[] value, byte[] key, byte[] salt) throws EncryptionException {
 
+        if((key.length == 16 || key.length == 24 || key.length ==32)
+                && salt.length == 16)
             return super.encrypt(Constant.EncryptionTypes.AES, Constant.Modes.CBC, Constant.Padding.PKCS5Padding, value, key, salt);
 
         else
             throw new EncryptionException("Key/Salt size is invalid for Aes Encryption");
 
-
-
     }
 
-   public String decrypt(String value,String key,String salt) throws EncryptionException {
+   public byte[] decrypt(byte[] value,byte[] key,byte[] salt) throws EncryptionException {
 
-       if((key.getBytes().length == 16 || key.getBytes().length == 24 || key.getBytes().length ==32)
-               && salt.getBytes().length == 16)
-
+       if((key.length == 16 || key.length == 24 || key.length ==32)
+               && salt.length == 16)
            return super.decrypt(Constant.EncryptionTypes.AES, Constant.Modes.CBC, Constant.Padding.PKCS5Padding, value, key, salt);
 
        else
            throw new EncryptionException("Key/Salt size is invalid for Aes Decryption!");
-
-
-
     }
+
 
 
 }

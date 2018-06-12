@@ -1,17 +1,21 @@
 package encryption;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args)throws Exception{
 
         System.out.println("Aes");
-        String word = "hell reer o";
+
+        String word = "hellfjko";
         String key = "asdfertjjhyrohgy";   //128-192-256 bit
         String initvector = "iiiiiiinişştor";  //16 byte
         System.out.println(word);
-        String res = Aes.getInstance().encrypt(word,key,initvector);
-        System.out.println(res);
-        String last = Aes.getInstance().decrypt(res,key,initvector);
-        System.out.println(last);
+        byte[] res = Aes.getInstance().encrypt(word.getBytes(),key.getBytes(),initvector.getBytes());
+        System.out.println(Arrays.toString(res));
+        byte[] last = Aes.getInstance().decrypt(res,key.getBytes(),initvector.getBytes());
+        System.out.println(new String(last));
         System.out.println();
 
         System.out.println("Blowfish");
@@ -21,11 +25,11 @@ public class Main {
 
         String ekey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaadgvgsd";
 
-        String bl = Blowfish.getInstance().encrypt(val,ekey,initvector2);
-        System.out.println(bl);
+        byte[] bl = Blowfish.getInstance().encrypt(val.getBytes(),ekey.getBytes(),initvector2.getBytes());
+        System.out.println(new String(bl));
 
-        String blres = Blowfish.getInstance().decrypt(bl,ekey,initvector2);
-        System.out.println(blres);
+        byte[] blres = Blowfish.getInstance().decrypt(bl,ekey.getBytes(),initvector2.getBytes());
+        System.out.println(new String(blres));
 
     }
 }

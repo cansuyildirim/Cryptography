@@ -22,49 +22,49 @@ public class AbstractEncryption {
 
     }
 
-    protected String encrypt(Constant.EncryptionTypes type, Constant.Modes mode, Constant.Padding padding, String value, String key, String salt) throws EncryptionException {
+    protected byte[] encrypt(Constant.EncryptionTypes type, Constant.Modes mode, Constant.Padding padding, byte[] value, byte[] key, byte[] salt) throws EncryptionException {
+
         try {
 
-            IvParameterSpec iv = new IvParameterSpec(salt.getBytes(CHAR_SET_NAME));
-            SecretKeySpec seckey = new SecretKeySpec(key.getBytes(CHAR_SET_NAME), type.getType());
+            IvParameterSpec iv = new IvParameterSpec(salt);
+            SecretKeySpec seckey = new SecretKeySpec(key, type.getType());
 
             Cipher cipher = Cipher.getInstance(type.getType() + "/" + mode.getMode() + "/" + padding.getPadding());
             cipher.init(Cipher.ENCRYPT_MODE, seckey, iv);
 
-            byte[] enc = cipher.doFinal(value.getBytes());
-            String encrypted = Base64.getEncoder().encodeToString(enc);
+            byte[] enc = cipher.doFinal(value);
 
-            return encrypted;
+            return enc;
+
+            //return Base64.getEncoder().encode(enc);
+
+
         }
         catch(Exception exception) {
             throw new EncryptionException("Encryption failed",new Exception());
         }
 
-
-
     }
 
-    protected String decrypt(Constant.EncryptionTypes type, Constant.Modes mode, Constant.Padding padding, String value, String key, String salt) throws EncryptionException {
+    protected byte[] decrypt(Constant.EncryptionTypes type, Constant.Modes mode, Constant.Padding padding, byte[] value, byte[] key, byte[] salt) throws EncryptionException {
+        
         try {
 
-            byte[] decval = Base64.getDecoder().decode(value.getBytes(CHAR_SET_NAME));
+            //byte[] decval = Base64.getDecoder().decode(value);
 
-            IvParameterSpec iv = new IvParameterSpec(salt.getBytes(CHAR_SET_NAME));
-            SecretKeySpec seckey = new SecretKeySpec(key.getBytes(CHAR_SET_NAME), type.getType());
+            IvParameterSpec iv = new IvParameterSpec(salt);
+            SecretKeySpec seckey = new SecretKeySpec(key, type.getType());
 
             Cipher cipher = Cipher.getInstance(type.getType() + "/" + mode.getMode() + "/" + padding.getPadding());
             cipher.init(Cipher.DECRYPT_MODE, seckey, iv);
 
-            byte[] dec = cipher.doFinal(decval);
-            String decrypted = new String(dec, CHAR_SET_NAME);
+            return cipher.doFinal(value);
 
-            return decrypted;
+            //return cipher.doFinal(decval);
         }
         catch (Exception exception){
             throw new EncryptionException("Decryption failed",new Exception());
         }
-
-
     }
 
 }

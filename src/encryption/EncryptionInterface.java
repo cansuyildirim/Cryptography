@@ -1,7 +1,7 @@
 package encryption;
 
 public interface EncryptionInterface {
-    String encrypt(String value,String key,String salt) throws Exception;
-    String decrypt(String value,String key,String salt) throws Exception;
+    byte[] encrypt(byte[] value,byte[] key,byte[] salt) throws Exception;
+    byte[] decrypt(byte[] value,byte[] key,byte[] salt) throws Exception;
 
 }
