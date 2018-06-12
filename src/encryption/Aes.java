@@ -29,7 +29,7 @@ public class Aes extends AbstractEncryption implements EncryptionInterface {
      *
      * @param value
      * @param key must be 128/192/256 bit
-     * @param salt must be 16 byte
+     * @param salt must be 16 bytes
      * @return
      * @throws EncryptionException
      */

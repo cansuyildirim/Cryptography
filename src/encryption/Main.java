@@ -18,7 +18,7 @@ public class Main {
         String initvector2 = "yyyujyyf";  //8byte
         String val = "hello";
         System.out.println(val);
-        String ekey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaabb";
+        String ekey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaadgvgsd";
         String bl = Blowfish.getInstance().encrypt(val,ekey,initvector2);
         System.out.println(bl);
 
