@@ -30,7 +30,7 @@ public class AbstractEncryption {
             SecretKeySpec seckey = new SecretKeySpec(key, type.getType());
 
             Cipher cipher = Cipher.getInstance(type.getType() + "/" + mode.getMode() + "/" + padding.getPadding());
-            cipher.init(Cipher.ENCRYPT_MODE, seckey, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, seckey,iv);
 
             byte[] enc = cipher.doFinal(value);
 
@@ -47,7 +47,7 @@ public class AbstractEncryption {
     }
 
     protected byte[] decrypt(Constant.EncryptionTypes type, Constant.Modes mode, Constant.Padding padding, byte[] value, byte[] key, byte[] salt) throws EncryptionException {
-        
+
         try {
 
             //byte[] decval = Base64.getDecoder().decode(value);
@@ -56,7 +56,7 @@ public class AbstractEncryption {
             SecretKeySpec seckey = new SecretKeySpec(key, type.getType());
 
             Cipher cipher = Cipher.getInstance(type.getType() + "/" + mode.getMode() + "/" + padding.getPadding());
-            cipher.init(Cipher.DECRYPT_MODE, seckey, iv);
+            cipher.init(Cipher.DECRYPT_MODE, seckey,iv);
 
             return cipher.doFinal(value);
 
@@ -65,6 +65,39 @@ public class AbstractEncryption {
         catch (Exception exception){
             throw new EncryptionException("Decryption failed",new Exception());
         }
+    }
+
+    protected byte[] encrypt(Constant.EncryptionTypes type, Constant.Modes mode, Constant.Padding padding, byte[] value,byte[] key) throws EncryptionException{
+
+        try{
+            SecretKeySpec seckey = new SecretKeySpec(key, type.getType());
+            Cipher cipher = Cipher.getInstance(type.getType() + "/" + mode.getMode() + "/" + padding.getPadding());
+            cipher.init(Cipher.ENCRYPT_MODE, seckey);
+
+            byte[] encyrp = cipher.doFinal(value);
+            return encyrp;
+        }
+        catch (Exception e){
+            throw new EncryptionException("Encryption failed",new Exception());
+        }
+
+
+    }
+    protected byte[] decrypt(Constant.EncryptionTypes type, Constant.Modes mode, Constant.Padding padding, byte[] value,byte[] key) throws EncryptionException{
+
+        try{
+
+            SecretKeySpec seckey = new SecretKeySpec(key, type.getType());
+            Cipher cipher = Cipher.getInstance(type.getType() + "/" + mode.getMode() + "/" + padding.getPadding());
+            cipher.init(Cipher.DECRYPT_MODE, seckey);
+
+            byte[] decryp = cipher.doFinal(value);
+            return decryp;
+        }
+        catch (Exception e){
+            throw new EncryptionException("Decryption failed",new Exception());
+        }
+
     }
 
 }

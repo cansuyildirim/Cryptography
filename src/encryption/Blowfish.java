@@ -48,4 +48,27 @@ public class Blowfish extends AbstractEncryption implements EncryptionInterface 
 
     }
 
+    public byte[] encrypt(byte[] value,byte[] key) throws EncryptionException{
+
+        if(key.length <= 56)
+
+            return super.encrypt(Constant.EncryptionTypes.Blowfish, Constant.Modes.ECB, Constant.Padding.PKCS5Padding, value, key);
+
+        else
+            throw new EncryptionException("Key/Salt size is invalid for Blowfish Encryption");
+
+
+    }
+
+    public byte[] decrypt(byte[] value,byte[] key)throws EncryptionException{
+
+        if(key.length <= 56)
+
+            return super.decrypt(Constant.EncryptionTypes.Blowfish, Constant.Modes.ECB, Constant.Padding.PKCS5Padding, value, key);
+
+        else
+            throw new EncryptionException("Key/Salt size is invalid for Blowfish Decryption");
+
+    }
+
 }

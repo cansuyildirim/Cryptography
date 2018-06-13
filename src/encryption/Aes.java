@@ -51,5 +51,30 @@ public class Aes extends AbstractEncryption implements EncryptionInterface {
     }
 
 
+    public byte[] encrypt(byte[] value,byte[] key) throws Exception{
+
+        if(key.length == 16 || key.length == 24 || key.length ==32)
+            return super.encrypt(Constant.EncryptionTypes.AES, Constant.Modes.ECB, Constant.Padding.PKCS5Padding, value, key);
+
+        else
+            throw new EncryptionException("Key/Salt size is invalid for Aes Encryption");
+
+    }
+
+    public byte[] decrypt(byte[] value,byte[] key) throws Exception{
+
+        if(key.length == 16 || key.length == 24 || key.length ==32)
+
+            return super.decrypt(Constant.EncryptionTypes.AES, Constant.Modes.ECB, Constant.Padding.PKCS5Padding, value, key);
+
+        else
+            throw new EncryptionException("Key/Salt size is invalid for Aes Decryption!");
+
+
+
+
+    }
+
+
 
 }
